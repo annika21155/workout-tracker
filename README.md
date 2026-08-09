@@ -103,3 +103,5 @@ Some notable decisions included:
 * Testing the application throughout development and resolving issues as they appeared
 
 Overall, Claude was used as a coding assistant and debugging resource throughout the project. It helped with ideas, explanations, boilerplate, and troubleshooting, but the development process remained iterative and involved testing and making decisions based on the actual behaviour of the application.
+
+**API docs:** https://workout-tracker-z9f9.onrender.com/scalar/v1
