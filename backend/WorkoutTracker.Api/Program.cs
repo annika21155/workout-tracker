@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using WorkoutTracker.Api.Services;
 using WorkoutTracker.Api.Hubs;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 // Explicitly disable config file-watching to avoid a native crash on containers
@@ -86,10 +87,8 @@ app.MapControllers();
 app.MapHub<LeaderboardHub>("/hubs/leaderboard");
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-}
+app.MapOpenApi();
+app.MapScalarApiReference();
 
 app.UseHttpsRedirection();
 
