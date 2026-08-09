@@ -7,6 +7,13 @@ using WorkoutTracker.Api.Services;
 using WorkoutTracker.Api.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
+// Explicitly disable config file-watching to avoid a native crash on containers
+// with low inotify limits (seen on Render's free tier).
+builder.Configuration.Sources.Clear();
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: false)
+    .AddEnvironmentVariables();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
