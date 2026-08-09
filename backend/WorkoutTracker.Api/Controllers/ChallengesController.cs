@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using WorkoutTracker.Api.DTOs;
 using WorkoutTracker.Api.Helpers;
 using WorkoutTracker.Api.Models;
+using Microsoft.AspNetCore.SignalR;
+using WorkoutTracker.Api.Hubs;
 
 namespace WorkoutTracker.Api.Controllers;
 
@@ -11,8 +13,14 @@ namespace WorkoutTracker.Api.Controllers;
 [Route("api/[controller]")]
 public class ChallengesController : ControllerBase
 {
+    private readonly IHubContext<LeaderboardHub> _hub;
+
+public ChallengesController(AppDbContext db, IHubContext<LeaderboardHub> hub)
+{
+    _db = db;
+    _hub = hub;
+}
     private readonly AppDbContext _db;
-    public ChallengesController(AppDbContext db) => _db = db;
 
     // GET /api/challenges — public, no auth required
     [HttpGet]
@@ -140,8 +148,8 @@ public class ChallengesController : ControllerBase
 
         await _db.SaveChangesAsync();
 
-        // NOTE: this is where you'll add the SignalR broadcast later —
         // notify friends in this challenge that the leaderboard changed.
+        await _hub.Clients.All.SendAsync("LeaderboardUpdated");
 
         return Ok(new { pointsEarned = completion.PointsEarned, currentStreak = participant.CurrentStreak });
     }

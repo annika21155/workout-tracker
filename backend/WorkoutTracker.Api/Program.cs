@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using WorkoutTracker.Api.Services;
+using WorkoutTracker.Api.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -42,12 +43,34 @@ builder.Services.AddAuthorization();
 // You'll also want controllers registered if not already present:
 builder.Services.AddControllers();
 
+builder.Services.AddSignalR();
+
+// CORS — needed because your frontend (Vercel) and backend (Render) will be
+// on different domains. SignalR specifically requires AllowCredentials()
+// and an explicit origin list — it will NOT work with a wildcard "*" origin.
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy.WithOrigins(
+                "http://localhost:5173",  // Vite's default local dev port
+                "https://YOUR-VERCEL-APP.vercel.app" // replace once you deploy
+            )
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors("FrontendPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<LeaderboardHub>("/hubs/leaderboard");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

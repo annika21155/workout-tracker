@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using WorkoutTracker.Api.DTOs;
 using WorkoutTracker.Api.Helpers;
 using WorkoutTracker.Api.Models;
+using Microsoft.AspNetCore.SignalR;
+using WorkoutTracker.Api.Hubs;
 
 namespace WorkoutTracker.Api.Controllers;
 
@@ -12,8 +14,14 @@ namespace WorkoutTracker.Api.Controllers;
 [Authorize]
 public class ActivityLogsController : ControllerBase
 {
+    private readonly IHubContext<LeaderboardHub> _hub;
+
+public ActivityLogsController(AppDbContext db, IHubContext<LeaderboardHub> hub)
+{
+    _db = db;
+    _hub = hub;
+}
     private readonly AppDbContext _db;
-    public ActivityLogsController(AppDbContext db) => _db = db;
 
     // GET /api/activitylogs — current user's own logs only
     [HttpGet]
@@ -42,6 +50,8 @@ public class ActivityLogsController : ControllerBase
         };
         _db.ActivityLogs.Add(log);
         await _db.SaveChangesAsync();
+
+        await _hub.Clients.All.SendAsync("LeaderboardUpdated");
 
         return Ok(new ActivityLogResponseDto(log.Id, log.ActivityType, log.DurationMinutes, log.LoggedAt, log.PointsEarned));
     }
