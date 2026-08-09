@@ -53,9 +53,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("FrontendPolicy", policy =>
     {
         policy.WithOrigins(
-                "http://localhost:5173",  // Vite's default local dev port
-                "https://YOUR-VERCEL-APP.vercel.app" // replace once you deploy
-            )
+        "http://localhost:5173",
+        "https://workout-tracker-omega-blush.vercel.app"
+        )
             .AllowAnyHeader()
             .AllowAnyMethod()
             .AllowCredentials();
