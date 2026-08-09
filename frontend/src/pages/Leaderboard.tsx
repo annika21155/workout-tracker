@@ -41,7 +41,7 @@ export function Leaderboard() {
           {entries.map((e) => (
             <div key={e.userId} className="card" style={{ display: "flex", justifyContent: "space-between" }}>
               <span>#{e.rank} {e.username}</span>
-              <span style={{ fontWeight: 700 }}>{e.totalPoints} pts</span>
+              <span className="pill">{e.totalPoints} pts</span>
             </div>
           ))}
         </div>

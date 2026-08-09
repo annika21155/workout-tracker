@@ -59,7 +59,7 @@ export function ActivityLog() {
           {logs.map((log) => (
             <div key={log.id} className="card" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <span>
-                {log.activityType} — {log.durationMinutes} min ({log.pointsEarned} pts)
+                {log.activityType} — {log.durationMinutes} min <span className="pill">{log.pointsEarned} pts</span>
               </span>
               <button className="btn-secondary" onClick={() => handleDelete(log.id)}>Delete</button>
             </div>

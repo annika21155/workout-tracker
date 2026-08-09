@@ -1,25 +1,27 @@
 :root[data-theme="light"] {
-  --bg: #ffffff;
-  --bg-secondary: #f4f4f5;
-  --text: #18181b;
-  --text-secondary: #71717a;
-  --border: #e4e4e7;
-  --accent: #4f46e5;
-  --accent-text: #ffffff;
-  --success: #16a34a;
-  --danger: #dc2626;
+  --bg: #faf6f0;
+  --bg-secondary: #ffffff;
+  --text: #2b2620;
+  --text-secondary: #7a6f5f;
+  --border: #e8dcc8;
+  --accent: #e0a83e;
+  --accent-text: #2b2620;
+  --accent-2: #d97a4d;
+  --success: #4b7b5a;
+  --danger: #c2483b;
 }
 
 :root[data-theme="dark"] {
-  --bg: #18181b;
-  --bg-secondary: #27272a;
-  --text: #fafafa;
-  --text-secondary: #a1a1aa;
-  --border: #3f3f46;
-  --accent: #818cf8;
-  --accent-text: #18181b;
-  --success: #4ade80;
-  --danger: #f87171;
+  --bg: #221e1a;
+  --bg-secondary: #2e2820;
+  --text: #f5efe6;
+  --text-secondary: #b8ac9c;
+  --border: #453d33;
+  --accent: #e0a83e;
+  --accent-text: #221e1a;
+  --accent-2: #e08a5d;
+  --success: #6fa97f;
+  --danger: #e07a6b;
 }
 
 * {
@@ -31,7 +33,25 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: var(--bg);
   color: var(--text);
+  font-size: 16px;
+  line-height: 1.5;
   transition: background 0.2s, color 0.2s;
+}
+
+h1 {
+  font-size: 42px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 26px;
+  font-weight: 700;
 }
 
 button {
@@ -40,37 +60,70 @@ button {
 }
 
 a {
-  color: var(--accent);
+  color: var(--accent-2);
+  text-decoration: none;
+  font-weight: 600;
 }
 
 .card {
   background: var(--bg-secondary);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 1rem;
+  border-radius: 20px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .btn {
   background: var(--accent);
   color: var(--accent-text);
   border: none;
-  border-radius: 6px;
-  padding: 0.5rem 1rem;
-  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.65rem 1.4rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: transform 0.1s, opacity 0.15s;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.btn:active {
+  transform: scale(0.97);
 }
 
 .btn-secondary {
   background: transparent;
   color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.5rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  padding: 0.6rem 1.3rem;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
-input {
+.pill {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--accent-text);
+  border-radius: 999px;
+  padding: 0.2rem 0.75rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+input,
+select {
   background: var(--bg);
   color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.5rem;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.95rem;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
 }
